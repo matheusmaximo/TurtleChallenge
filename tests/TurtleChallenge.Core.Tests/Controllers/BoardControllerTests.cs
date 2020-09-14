@@ -1,7 +1,6 @@
 ﻿using System;
 using TurtleChallenge.Core.Controllers;
 using TurtleChallenge.Core.Controllers.BoardParts;
-using TurtleChallenge.Core.Exceptions;
 using TurtleChallenge.Core.Tests.Builders;
 using TurtleChallenge.Data.Reporter.Dto;
 using TurtleChallenge.Data.Retriever.Dto;

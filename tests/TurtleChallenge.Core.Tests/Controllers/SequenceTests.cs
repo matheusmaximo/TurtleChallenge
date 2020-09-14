@@ -1,7 +1,6 @@
 ﻿using Moq;
 using System;
 using TurtleChallenge.Core.Controllers;
-using TurtleChallenge.Core.Exceptions;
 using TurtleChallenge.Data.Reporter.Dto;
 using TurtleChallenge.TestUtilities.xUnit.Settings;
 using Xunit;

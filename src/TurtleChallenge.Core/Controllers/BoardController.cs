@@ -8,43 +8,35 @@ namespace TurtleChallenge.Core.Controllers
 {
     public class BoardController : IBoardController
     {
-        private readonly GameSettings _gameSettings;
+        private readonly ITilesController _tilesController;
+        private readonly ITurtleController _turtleController;
 
-        private Tile[,]? _tiles;
-        public Tile[,]? GetTiles()
+
+        public BoardController(ITilesController tilesController, ITurtleController turtleController)
         {
-            return _tiles != null ? (Tile[,])_tiles.Clone() : null;
+            _tilesController = tilesController ?? throw new ArgumentNullException(nameof(tilesController));
+            _turtleController = turtleController ?? throw new ArgumentNullException(nameof(turtleController));
+
+            ValidateTurtlePosition();
         }
 
-        private Turtle? _turtle;
-        public Turtle GetTurtle()
+        private void ValidateTurtlePosition()
         {
-            if (_turtle == null)
+            var turtlePosition = _turtleController.GetTurtle().GetPosition();
+            var x = turtlePosition.X;
+            var y = turtlePosition.Y;
+
+            var tile = _tilesController.GetTile(x, y);
+
+            if (tile == null)
             {
-                throw new ArgumentException($"{nameof(Turtle)} not initialized");
+                throw new IndexOutOfBoardException(nameof(GameSettings.StartingPosition), x, y);
             }
 
-            var position = _turtle.GetPosition();
-            var direction = _turtle.Direction;
-            return new Turtle(position.X, position.Y, direction);
-        }
-
-        public BoardController(GameSettings gameSettings)
-        {
-            _gameSettings = gameSettings ?? throw new System.ArgumentNullException(nameof(gameSettings));
-
-            Init();
-        }
-
-        private void Init()
-        {
-            CreateTilesMatrix();
-
-            SetupExit();
-
-            SetupMines();
-
-            SetupTurtle();
+            if (tile is Tile)
+            {
+                throw new IndexOcupiedException(nameof(GameSettings.StartingPosition), x, y);
+            }
         }
 
         public void Reset()
@@ -102,109 +94,5 @@ namespace TurtleChallenge.Core.Controllers
         {
             _turtle?.Rotate();
         }
-
-        #region Create/Setup Methods
-        private void CreateTilesMatrix()
-        {
-            _tiles = new Tile[_gameSettings.BoardSize.N, _gameSettings.BoardSize.M];
-        }
-
-        private void SetupExit()
-        {
-            int x = _gameSettings.ExitPoint.X ?? 0;
-            int y = _gameSettings.ExitPoint.Y ?? 0;
-
-            if (!IsInsideBoard(x, y))
-            {
-                throw new IndexOutOfBoardException(nameof(GameSettings.ExitPoint), x, y);
-            }
-
-            if (!IsEmptySpace(x, y))
-            {
-                throw new IndexOcupiedException(nameof(GameSettings.ExitPoint), x, y);
-            }
-
-            if (_tiles != null)
-            {
-                _tiles[x, y] = new ExitTile();
-            }
-        }
-
-        private void SetupMines()
-        {
-            for (int index = 0; index < _gameSettings.Mines.Count; index++)
-            {
-                Point mine = _gameSettings.Mines[index];
-                string mineDescription = $"{nameof(GameSettings.Mines)}[{index}]";
-
-                AddMine(mine, mineDescription);
-            }
-        }
-
-        private void AddMine(Point mine, string mineDescription)
-        {
-            if (_tiles == null)
-            {
-                return;
-            }
-
-            int x = mine.X ?? 0;
-            int y = mine.Y ?? 0;
-
-            if (!IsInsideBoard(x, y))
-            {
-                throw new IndexOutOfBoardException(mineDescription, x, y);
-            }
-
-            if (!IsEmptySpace(x, y))
-            {
-                throw new IndexOcupiedException(mineDescription, x, y);
-            }
-
-            _tiles[x, y] = new MineTile();
-        }
-
-        private void SetupTurtle()
-        {
-            var x = _gameSettings.StartingPosition.X ?? 0;
-            var y = _gameSettings.StartingPosition.Y ?? 0;
-
-            if (!IsInsideBoard(x, y))
-            {
-                throw new IndexOutOfBoardException(nameof(GameSettings.StartingPosition), x, y);
-            }
-
-            if (!IsEmptySpace(x, y))
-            {
-                throw new IndexOcupiedException(nameof(GameSettings.StartingPosition), x, y);
-            }
-
-            var direction = _gameSettings.StartingPosition.Direction ?? Directions.North;
-
-            _turtle = new Turtle(x, y, direction);
-        }
-        #endregion
-
-        #region State methods
-        private bool IsInsideBoard(int x, int y)
-        {
-            return _tiles != null && x >= 0 && x < _tiles.GetLength(0) && y >= 0 && y < _tiles.GetLength(1);
-        }
-
-        private bool IsEmptySpace(int x, int y)
-        {
-            return _tiles != null && _tiles[x, y] == null;
-        }
-
-        private bool IsOverMine(int x, int y)
-        {
-            return _tiles != null && _tiles[x, y] is MineTile;
-        }
-
-        private bool IsOverExit(int x, int y)
-        {
-            return _tiles != null && _tiles[x, y] is ExitTile;
-        }
-        #endregion
     }
 }

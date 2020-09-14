@@ -1,5 +1,4 @@
-﻿using TurtleChallenge.Core.Exceptions;
-using TurtleChallenge.Data.Reporter.Dto;
+﻿using TurtleChallenge.Data.Reporter.Dto;
 using TurtleChallenge.Data.Retriever.Dto;
 
 namespace TurtleChallenge.Core.Controllers
