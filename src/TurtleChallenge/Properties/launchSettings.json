@@ -1,0 +1,8 @@
+{
+  "profiles": {
+    "TurtleChallenge": {
+      "commandName": "Project",
+      "commandLineArgs": "game-settings.json moves"
+    }
+  }
+}

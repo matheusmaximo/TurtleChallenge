@@ -4,7 +4,7 @@ namespace TurtleChallenge.Core.Controllers
 {
     public interface ITurtle
     {
-        Point GetPosition();
+        Position GetPosition();
 
         void Move();
 

@@ -2,7 +2,7 @@ using Moq;
 using System;
 using TurtleChallenge.Core.Controllers;
 using TurtleChallenge.Data.Reporter;
-using TurtleChallenge.Tests.Utils.xUnit.Settings;
+using TurtleChallenge.TestUtilities.xUnit.Settings;
 using Xunit;
 
 namespace TurtleChallenge.Core.Tests

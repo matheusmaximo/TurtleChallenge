@@ -5,7 +5,7 @@ using TurtleChallenge.Core.Exceptions;
 using TurtleChallenge.Core.Tests.Builders;
 using TurtleChallenge.Data.Reporter.Dto;
 using TurtleChallenge.Data.Retriever.Dto;
-using TurtleChallenge.Tests.Utils.xUnit.Settings;
+using TurtleChallenge.TestUtilities.xUnit.Settings;
 using Xunit;
 
 namespace TurtleChallenge.Core.Tests.Controllers
@@ -24,12 +24,11 @@ namespace TurtleChallenge.Core.Tests.Controllers
         }
 
         [Fact]
-        public void Init_GivenValidGameSettings_ShouldCreateTiles()
+        public void Constructor_GivenValidGameSettings_ShouldCreateTiles()
         {
             var gameSettings = new GameSettingsBuilder().Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var result = sut.GetTiles();
 
@@ -39,12 +38,11 @@ namespace TurtleChallenge.Core.Tests.Controllers
         }
 
         [Fact]
-        public void Init_GivenValidGameSettings_ShouldSetupExit()
+        public void Constructor_GivenValidGameSettings_ShouldSetupExit()
         {
             var gameSettings = new GameSettingsBuilder().Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var result = sut.GetTiles();
             var exitTile = result[(int)gameSettings.ExitPoint.X, (int)gameSettings.ExitPoint.Y];
@@ -53,12 +51,11 @@ namespace TurtleChallenge.Core.Tests.Controllers
         }
 
         [Fact]
-        public void Init_GivenValidGameSettings_ShouldSetupMines()
+        public void Constructor_GivenValidGameSettings_ShouldSetupMines()
         {
             var gameSettings = new GameSettingsBuilder().Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var result = sut.GetTiles();
             var firstMine = result[(int)gameSettings.Mines[0].X, (int)gameSettings.Mines[0].Y];
@@ -71,12 +68,11 @@ namespace TurtleChallenge.Core.Tests.Controllers
         }
 
         [Fact]
-        public void Init_ShouldSetupTurtle()
+        public void Constructor_ShouldSetupTurtle()
         {
             var gameSettings = new GameSettingsBuilder().Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var result = sut.GetTurtle();
             var turtlePosition = result.GetPosition();
@@ -94,7 +90,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
             sut.MoveTurtle();
 
             var result = sut.GetTurtle();
@@ -113,7 +108,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var exception = Record.Exception(() => sut.MoveTurtle());
 
@@ -128,7 +122,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var exception = Record.Exception(() => sut.MoveTurtle());
 
@@ -146,7 +139,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
             sut.RotateTurtle();
 
             var result = sut.GetTurtle();
@@ -161,7 +153,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
             sut.MoveTurtle();
             sut.Reset();
 
@@ -180,7 +171,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
 
             var result = sut.GetResult();
             Assert.Equal(MovesResultPossibilities.InDanger, result);
@@ -202,7 +192,6 @@ namespace TurtleChallenge.Core.Tests.Controllers
                 .Build();
 
             var sut = new BoardController(gameSettings);
-            sut.Init();
             sut.MoveTurtle();
 
             var result = sut.GetResult();

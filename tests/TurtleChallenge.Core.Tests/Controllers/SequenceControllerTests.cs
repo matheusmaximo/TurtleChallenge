@@ -2,7 +2,7 @@
 using System;
 using TurtleChallenge.Core.Controllers;
 using TurtleChallenge.Data.Retriever;
-using TurtleChallenge.Tests.Utils.xUnit.Settings;
+using TurtleChallenge.TestUtilities.xUnit.Settings;
 using Xunit;
 
 namespace TurtleChallenge.Core.Tests.Controllers
@@ -21,9 +21,9 @@ namespace TurtleChallenge.Core.Tests.Controllers
         }
 
         [Fact]
-        public void LoadSequence_GivenNullMoves_ReturnNull()
+        public void LoadSequence_GivenEmptyMoves_ReturnNull()
         {
-            char[] moves = null;
+            char[] moves = Array.Empty<char>();
 
             Mock<ISequencesRetriever> mockSequencesRetriever = new Mock<ISequencesRetriever>();
             mockSequencesRetriever.Setup(m => m.GetNextSequenceOfMoves()).Returns(moves);

@@ -13,16 +13,11 @@ namespace TurtleChallenge.Core.Controllers
             _sequencesRetriever = sequencesRetriever ?? throw new System.ArgumentNullException(nameof(sequencesRetriever));
         }
 
-        public ISequence LoadSequence()
+        public ISequence? LoadSequence()
         {
             char[] moves = _sequencesRetriever.GetNextSequenceOfMoves();
 
-            if (moves == null)
-            {
-                return null;
-            }
-
-            return new Sequence(_nextSequenceId++, moves);
+            return moves.Length == 0 ? null : (ISequence)new Sequence(_nextSequenceId++, moves);
         }
     }
 }

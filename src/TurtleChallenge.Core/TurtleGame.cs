@@ -18,18 +18,6 @@ namespace TurtleChallenge.Core
 
         public void Play()
         {
-            SetupBoard();
-
-            ExecuteMoves();
-        }
-
-        private void SetupBoard()
-        {
-            _boardController.Init();
-        }
-
-        private void ExecuteMoves()
-        {
             while (_sequenceController.LoadSequence() is ISequence sequence)
             {
                 _boardController.Reset();

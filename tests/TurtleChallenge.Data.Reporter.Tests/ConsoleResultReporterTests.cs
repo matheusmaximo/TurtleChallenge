@@ -1,6 +1,6 @@
 using System;
 using TurtleChallenge.Data.Reporter.Dto;
-using TurtleChallenge.Tests.Utils.xUnit.Settings;
+using TurtleChallenge.TestUtilities.xUnit.Settings;
 using Xunit;
 
 namespace TurtleChallenge.Data.Reporter.Tests

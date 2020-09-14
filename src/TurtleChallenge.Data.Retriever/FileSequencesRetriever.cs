@@ -6,7 +6,7 @@ namespace TurtleChallenge.Data.Retriever
 {
     public class FileSequencesRetriever : ISequencesRetriever, IDisposable
     {
-        private StreamReader _movesStreamReader = null;
+        private StreamReader? _movesStreamReader = null;
         private readonly TurtleGameFileSettings _settings;
 
         public FileSequencesRetriever(TurtleGameFileSettings settings)
@@ -18,7 +18,7 @@ namespace TurtleChallenge.Data.Retriever
 
         private void Init()
         {
-            string movesFilePath = _settings.MovesFile;
+            string? movesFilePath = _settings.MovesFile;
             if (File.Exists(movesFilePath))
             {
                 try
@@ -41,7 +41,12 @@ namespace TurtleChallenge.Data.Retriever
 
         public char[] GetNextSequenceOfMoves()
         {
-            return _movesStreamReader?.ReadLine()?.Trim().ToCharArray();
+            var line = _movesStreamReader?.ReadLine();
+            if (string.IsNullOrWhiteSpace(line))
+            {
+                return Array.Empty<char>();
+            }
+            return line.Trim().ToCharArray();
         }
 
         #region Dispose

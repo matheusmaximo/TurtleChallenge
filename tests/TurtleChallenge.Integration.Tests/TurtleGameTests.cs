@@ -5,7 +5,7 @@ using TurtleChallenge.Core.Tests.Builders;
 using TurtleChallenge.Data.Reporter;
 using TurtleChallenge.Data.Reporter.Dto;
 using TurtleChallenge.Data.Retriever;
-using TurtleChallenge.Tests.Utils.xUnit.Settings;
+using TurtleChallenge.TestUtilities.xUnit.Settings;
 using Xunit;
 
 namespace TurtleChallenge.Integration.Tests

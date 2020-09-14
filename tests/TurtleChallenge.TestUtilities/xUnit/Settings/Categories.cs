@@ -1,4 +1,4 @@
-﻿namespace TurtleChallenge.Tests.Utils.xUnit.Settings
+﻿namespace TurtleChallenge.TestUtilities.xUnit.Settings
 {
     public static class Categories
     {

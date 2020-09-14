@@ -15,14 +15,7 @@ namespace TurtleChallenge.Core.Controllers
             Direction = direction;
         }
 
-        public Point GetPosition()
-        {
-            return new Point
-            {
-                X = _x,
-                Y = _y
-            };
-        }
+        public Position GetPosition() => new Position(_x, _y);
 
         public void Move()
         {

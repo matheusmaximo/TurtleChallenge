@@ -1,4 +1,5 @@
-﻿using TurtleChallenge.Core.Controllers.BoardParts;
+﻿using System;
+using TurtleChallenge.Core.Controllers.BoardParts;
 using TurtleChallenge.Core.Exceptions;
 using TurtleChallenge.Data.Reporter.Dto;
 using TurtleChallenge.Data.Retriever.Dto;
@@ -9,26 +10,33 @@ namespace TurtleChallenge.Core.Controllers
     {
         private readonly GameSettings _gameSettings;
 
-        private Tile[,] _tiles;
-        public Tile[,] GetTiles()
+        private Tile[,]? _tiles;
+        public Tile[,]? GetTiles()
         {
-            return (Tile[,])_tiles.Clone();
+            return _tiles != null ? (Tile[,])_tiles.Clone() : null;
         }
 
-        private Turtle _turtle;
+        private Turtle? _turtle;
         public Turtle GetTurtle()
         {
+            if (_turtle == null)
+            {
+                throw new ArgumentException($"{nameof(Turtle)} not initialized");
+            }
+
             var position = _turtle.GetPosition();
             var direction = _turtle.Direction;
-            return new Turtle((int)position.X, (int)position.Y, direction);
+            return new Turtle(position.X, position.Y, direction);
         }
 
         public BoardController(GameSettings gameSettings)
         {
             _gameSettings = gameSettings ?? throw new System.ArgumentNullException(nameof(gameSettings));
+
+            Init();
         }
 
-        public void Init()
+        private void Init()
         {
             CreateTilesMatrix();
 
@@ -41,21 +49,26 @@ namespace TurtleChallenge.Core.Controllers
 
         public void Reset()
         {
-            int x = (int)_gameSettings.StartingPosition.X;
-            int y = (int)_gameSettings.StartingPosition.Y;
-            var direction = (Directions)_gameSettings.StartingPosition.Direction;
+            int x = _gameSettings.StartingPosition.X ?? 0;
+            int y = _gameSettings.StartingPosition.Y ?? 0;
+            var direction = _gameSettings.StartingPosition.Direction ?? Directions.North;
 
             _turtle = new Turtle(x, y, direction);
         }
 
         public void MoveTurtle()
         {
+            if (_turtle == null)
+            {
+                return;
+            }
+
             _turtle.Move();
 
             var position = _turtle.GetPosition();
 
-            int x = (int)position.X;
-            int y = (int)position.Y;
+            int x = position.X;
+            int y = position.Y;
 
             if (!IsInsideBoard(x, y))
             {
@@ -70,29 +83,34 @@ namespace TurtleChallenge.Core.Controllers
 
         public MovesResultPossibilities GetResult()
         {
+            if (_turtle == null)
+            {
+                throw new ArgumentException($"{nameof(Turtle)} not initialized");
+            }
+
             var position = _turtle.GetPosition();
 
-            int x = (int)position.X;
-            int y = (int)position.Y;
+            int x = position.X;
+            int y = position.Y;
 
             return IsOverExit(x, y) ? MovesResultPossibilities.Success : MovesResultPossibilities.InDanger;
         }
 
         public void RotateTurtle()
         {
-            _turtle.Rotate();
+            _turtle?.Rotate();
         }
 
         #region Create/Setup Methods
         private void CreateTilesMatrix()
         {
-            _tiles = new Tile[(int)_gameSettings.BoardSize.N, (int)_gameSettings.BoardSize.M];
+            _tiles = new Tile[_gameSettings.BoardSize.N, _gameSettings.BoardSize.M];
         }
 
         private void SetupExit()
         {
-            int x = (int)_gameSettings.ExitPoint.X;
-            int y = (int)_gameSettings.ExitPoint.Y;
+            int x = _gameSettings.ExitPoint.X ?? 0;
+            int y = _gameSettings.ExitPoint.Y ?? 0;
 
             if (!IsInsideBoard(x, y))
             {
@@ -104,7 +122,10 @@ namespace TurtleChallenge.Core.Controllers
                 throw new IndexOcupiedException(nameof(GameSettings.ExitPoint), x, y);
             }
 
-            _tiles[x, y] = new ExitTile();
+            if (_tiles != null)
+            {
+                _tiles[x, y] = new ExitTile();
+            }
         }
 
         private void SetupMines()
@@ -120,8 +141,13 @@ namespace TurtleChallenge.Core.Controllers
 
         private void AddMine(Point mine, string mineDescription)
         {
-            int x = (int)mine.X;
-            int y = (int)mine.Y;
+            if (_tiles == null)
+            {
+                return;
+            }
+
+            int x = mine.X ?? 0;
+            int y = mine.Y ?? 0;
 
             if (!IsInsideBoard(x, y))
             {
@@ -138,8 +164,8 @@ namespace TurtleChallenge.Core.Controllers
 
         private void SetupTurtle()
         {
-            var x = (int)_gameSettings.StartingPosition.X;
-            var y = (int)_gameSettings.StartingPosition.Y;
+            var x = _gameSettings.StartingPosition.X ?? 0;
+            var y = _gameSettings.StartingPosition.Y ?? 0;
 
             if (!IsInsideBoard(x, y))
             {
@@ -151,7 +177,7 @@ namespace TurtleChallenge.Core.Controllers
                 throw new IndexOcupiedException(nameof(GameSettings.StartingPosition), x, y);
             }
 
-            var direction = (Directions)_gameSettings.StartingPosition.Direction;
+            var direction = _gameSettings.StartingPosition.Direction ?? Directions.North;
 
             _turtle = new Turtle(x, y, direction);
         }
@@ -160,22 +186,22 @@ namespace TurtleChallenge.Core.Controllers
         #region State methods
         private bool IsInsideBoard(int x, int y)
         {
-            return x >= 0 && x < _tiles.GetLength(0) && y >= 0 && y < _tiles.GetLength(1);
+            return _tiles != null && x >= 0 && x < _tiles.GetLength(0) && y >= 0 && y < _tiles.GetLength(1);
         }
 
         private bool IsEmptySpace(int x, int y)
         {
-            return _tiles[x, y] == null;
+            return _tiles != null && _tiles[x, y] == null;
         }
 
         private bool IsOverMine(int x, int y)
         {
-            return _tiles[x, y] is MineTile;
+            return _tiles != null && _tiles[x, y] is MineTile;
         }
 
         private bool IsOverExit(int x, int y)
         {
-            return _tiles[x, y] is ExitTile;
+            return _tiles != null && _tiles[x, y] is ExitTile;
         }
         #endregion
     }

@@ -1,6 +1,6 @@
 using System;
 using System.ComponentModel;
-using TurtleChallenge.Tests.Utils.xUnit.Settings;
+using TurtleChallenge.TestUtilities.xUnit.Settings;
 using TurtleChallenge.Utils.Extensions;
 using Xunit;
 
@@ -15,7 +15,7 @@ namespace TurtleChallenge.Utils.Tests.Extensions
             var value = Test.FirstOption;
             var expected = "Description";
 
-            var result = EnumExtension.GetDescription(value);
+            var result = EnumExtensions.GetDescription(value);
 
             Assert.Equal(expected, result);
         }
@@ -26,7 +26,7 @@ namespace TurtleChallenge.Utils.Tests.Extensions
             var value = Test.SecondOption;
             var expected = Enum.GetName(typeof(Test), value);
 
-            var result = EnumExtension.GetDescription(value);
+            var result = EnumExtensions.GetDescription(value);
 
             Assert.Equal(expected, result);
         }
@@ -37,7 +37,7 @@ namespace TurtleChallenge.Utils.Tests.Extensions
             var value = (Test)2;
             var expected = string.Empty;
 
-            var result = EnumExtension.GetDescription(value);
+            var result = EnumExtensions.GetDescription(value);
 
             Assert.Equal(expected, result);
         }

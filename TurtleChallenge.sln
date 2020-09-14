@@ -5,11 +5,11 @@ VisualStudioVersion = 16.0.30503.244
 MinimumVisualStudioVersion = 10.0.40219.1
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurtleChallenge", "src\TurtleChallenge\TurtleChallenge.csproj", "{F4329B45-86AD-4927-A9A4-53EB04E381CF}"
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurtleChallenge.Tests.Utils", "tests\TurtleChallenge.Tests.Utils\TurtleChallenge.Tests.Utils.csproj", "{ACC75A1C-07E2-4D96-89A8-0F6E1610A9ED}"
-EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution Items", "{93572037-5E23-4C82-8518-937C4BDB06D4}"
 	ProjectSection(SolutionItems) = preProject
-		docs\README.md = docs\README.md
+		game-settings.json = game-settings.json
+		moves = moves
+		README.md = README.md
 	EndProjectSection
 EndProject
 Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "src", "src", "{0C664C55-3FE7-4E37-B2D7-85E0B772F6A4}"
@@ -32,7 +32,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurtleChallenge.Data.Report
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurtleChallenge.Core.Tests", "tests\TurtleChallenge.Core.Tests\TurtleChallenge.Core.Tests.csproj", "{AA84C820-7C30-4F46-BCD3-3C977A9E75FF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TurtleChallenge.Integration.Tests", "tests\TurtleChallenge.Integration.Tests\TurtleChallenge.Integration.Tests.csproj", "{BEB5A538-2452-4B09-8A87-517754F3BD6C}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurtleChallenge.Integration.Tests", "tests\TurtleChallenge.Integration.Tests\TurtleChallenge.Integration.Tests.csproj", "{BEB5A538-2452-4B09-8A87-517754F3BD6C}"
+EndProject
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "TurtleChallenge.TestUtilities", "tests\TurtleChallenge.TestUtilities\TurtleChallenge.TestUtilities.csproj", "{67B72F30-3021-427D-9B43-F83FBE53B628}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -44,10 +46,6 @@ Global
 		{F4329B45-86AD-4927-A9A4-53EB04E381CF}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F4329B45-86AD-4927-A9A4-53EB04E381CF}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F4329B45-86AD-4927-A9A4-53EB04E381CF}.Release|Any CPU.Build.0 = Release|Any CPU
-		{ACC75A1C-07E2-4D96-89A8-0F6E1610A9ED}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{ACC75A1C-07E2-4D96-89A8-0F6E1610A9ED}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{ACC75A1C-07E2-4D96-89A8-0F6E1610A9ED}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{ACC75A1C-07E2-4D96-89A8-0F6E1610A9ED}.Release|Any CPU.Build.0 = Release|Any CPU
 		{89C43F58-F651-4A36-A631-1EB1AD92A422}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{89C43F58-F651-4A36-A631-1EB1AD92A422}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{89C43F58-F651-4A36-A631-1EB1AD92A422}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -84,13 +82,16 @@ Global
 		{BEB5A538-2452-4B09-8A87-517754F3BD6C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{BEB5A538-2452-4B09-8A87-517754F3BD6C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{BEB5A538-2452-4B09-8A87-517754F3BD6C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{67B72F30-3021-427D-9B43-F83FBE53B628}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{67B72F30-3021-427D-9B43-F83FBE53B628}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{67B72F30-3021-427D-9B43-F83FBE53B628}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{67B72F30-3021-427D-9B43-F83FBE53B628}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
 	EndGlobalSection
 	GlobalSection(NestedProjects) = preSolution
 		{F4329B45-86AD-4927-A9A4-53EB04E381CF} = {0C664C55-3FE7-4E37-B2D7-85E0B772F6A4}
-		{ACC75A1C-07E2-4D96-89A8-0F6E1610A9ED} = {BFE124B5-7DD2-4B75-92D7-18CC655F24C4}
 		{89C43F58-F651-4A36-A631-1EB1AD92A422} = {0C664C55-3FE7-4E37-B2D7-85E0B772F6A4}
 		{7844AD91-AC13-42C3-BF14-76F0459713A9} = {0C664C55-3FE7-4E37-B2D7-85E0B772F6A4}
 		{3D696CDD-1676-482E-9228-AB61C2638467} = {0C664C55-3FE7-4E37-B2D7-85E0B772F6A4}
@@ -100,6 +101,7 @@ Global
 		{A798FF3A-B348-41DE-B587-2D25818F0FE5} = {BFE124B5-7DD2-4B75-92D7-18CC655F24C4}
 		{AA84C820-7C30-4F46-BCD3-3C977A9E75FF} = {BFE124B5-7DD2-4B75-92D7-18CC655F24C4}
 		{BEB5A538-2452-4B09-8A87-517754F3BD6C} = {BFE124B5-7DD2-4B75-92D7-18CC655F24C4}
+		{67B72F30-3021-427D-9B43-F83FBE53B628} = {BFE124B5-7DD2-4B75-92D7-18CC655F24C4}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {117AC307-227D-4227-A38F-957F7562B8C8}

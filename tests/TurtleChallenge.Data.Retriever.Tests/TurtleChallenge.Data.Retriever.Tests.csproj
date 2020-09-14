@@ -1,7 +1,8 @@
-<Project Sdk="Microsoft.NET.Sdk">
+﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
     <TargetFramework>netcoreapp3.1</TargetFramework>
+    <TreatWarningsAsErrors>true</TreatWarningsAsErrors>
 
     <IsPackable>false</IsPackable>
   </PropertyGroup>
@@ -15,7 +16,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\..\src\TurtleChallenge.Data.Retriever\TurtleChallenge.Data.Retriever.csproj" />
-    <ProjectReference Include="..\TurtleChallenge.Tests.Utils\TurtleChallenge.Tests.Utils.csproj" />
+    <ProjectReference Include="..\TurtleChallenge.TestUtilities\TurtleChallenge.TestUtilities.csproj" />
   </ItemGroup>
 
 </Project>

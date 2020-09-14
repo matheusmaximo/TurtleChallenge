@@ -2,6 +2,6 @@
 {
     public interface ISequenceController
     {
-        ISequence LoadSequence();
+        ISequence? LoadSequence();
     }
 }
