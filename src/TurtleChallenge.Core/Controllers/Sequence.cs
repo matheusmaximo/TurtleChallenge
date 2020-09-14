@@ -18,37 +18,24 @@ namespace TurtleChallenge.Core.Controllers
 
         public MovesResult ExecuteMoves(IBoardController board)
         {
-            MovesResultPossibilities? movesResult;
-            try
+            MovesResultPossibilities movesResult = board.GetResult();
+            foreach (var move in _moves)
             {
-                foreach (var move in _moves)
+                switch ((Moves)move)
                 {
-                    switch ((Moves)move)
-                    {
-                        case Moves.Move:
-                            board.MoveTurtle();
-                            break;
-                        case Moves.Rotate:
-                            board.RotateTurtle();
-                            break;
-                    }
+                    case Moves.Move:
+                        movesResult = board.MoveTurtle();
+                        break;
+                    case Moves.Rotate:
+                        board.RotateTurtle();
+                        break;
                 }
-
-                movesResult = board.GetResult();
-            }
-            catch (TurtleHitMineException)
-            {
-                movesResult = MovesResultPossibilities.MineHit;
-            }
-            catch (IndexOutOfBoardException)
-            {
-                movesResult = MovesResultPossibilities.OutOfBoard;
             }
 
             return new MovesResult
             {
                 SequenceId = SequenceId,
-                Result = (MovesResultPossibilities)movesResult
+                Result = movesResult
             };
         }
     }

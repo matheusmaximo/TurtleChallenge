@@ -5,7 +5,7 @@ namespace TurtleChallenge.Core.Controllers
     public interface IBoardController
     {
         void Reset();
-        void MoveTurtle();
+        MovesResultPossibilities MoveTurtle();
         void RotateTurtle();
         MovesResultPossibilities GetResult();
     }

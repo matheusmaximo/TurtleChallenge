@@ -56,11 +56,11 @@ namespace TurtleChallenge.Core.Controllers
             _turtle = new Turtle(x, y, direction);
         }
 
-        public void MoveTurtle()
+        public MovesResultPossibilities MoveTurtle()
         {
             if (_turtle == null)
             {
-                return;
+                throw new ArgumentException($"{nameof(Turtle)} not initialized");
             }
 
             _turtle.Move();
@@ -72,13 +72,15 @@ namespace TurtleChallenge.Core.Controllers
 
             if (!IsInsideBoard(x, y))
             {
-                throw new IndexOutOfBoardException(nameof(Turtle), x, y);
+                return MovesResultPossibilities.OutOfBoard;
             }
 
             if (IsOverMine(x, y))
             {
-                throw new TurtleHitMineException();
+                return MovesResultPossibilities.MineHit;
             }
+
+            return IsOverExit(x, y) ? MovesResultPossibilities.Success : MovesResultPossibilities.InDanger;
         }
 
         public MovesResultPossibilities GetResult()

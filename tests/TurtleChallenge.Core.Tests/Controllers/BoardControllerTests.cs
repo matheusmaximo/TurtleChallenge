@@ -101,31 +101,62 @@ namespace TurtleChallenge.Core.Tests.Controllers
         }
 
         [Fact]
-        public void MoveTurtle_WhenMoveOutOfBoard_ShouldThrowException()
+        public void MoveTurtle_WhenMoveEmptyTile_ReturnInDanger()
+        {
+            var gameSettings = new GameSettingsBuilder()
+                .Build();
+
+            var sut = new BoardController(gameSettings);
+            var result = sut.MoveTurtle();
+
+            Assert.Equal(MovesResultPossibilities.InDanger, result);
+        }
+
+        [Fact]
+        public void MoveTurtle_WhenMoveOutOfBoard_ReturnOutOfBoard()
         {
             var gameSettings = new GameSettingsBuilder()
                 .WithStartingPositionDirection(Directions.West)
                 .Build();
 
             var sut = new BoardController(gameSettings);
+            var result = sut.MoveTurtle();
 
-            var exception = Record.Exception(() => sut.MoveTurtle());
-
-            Assert.IsType<IndexOutOfBoardException>(exception);
+            Assert.Equal(MovesResultPossibilities.OutOfBoard, result);
         }
 
         [Fact]
-        public void MoveTurtle_WhenMoveToMine_ShouldThrowException()
+        public void MoveTurtle_WhenMoveToMine_ReturnMineHit()
         {
             var gameSettings = new GameSettingsBuilder()
                 .WithStartingPositionDirection(Directions.East)
                 .Build();
 
             var sut = new BoardController(gameSettings);
+            var result = sut.MoveTurtle();
 
-            var exception = Record.Exception(() => sut.MoveTurtle());
+            Assert.Equal(MovesResultPossibilities.MineHit, result);
+        }
 
-            Assert.IsType<TurtleHitMineException>(exception);
+        [Fact]
+        public void MoveTurtle_WhenMoveToMine_ReturnSuccess()
+        {
+            var exitPoint = new Point
+            {
+                X = 0,
+                Y = 1
+            };
+            var gameSettings = new GameSettingsBuilder()
+                .WithStartingPositionDirection(Directions.North)
+                .WithStartingPositionX(0)
+                .WithStartingPositionY(0)
+                .WithExitPoint(exitPoint)
+                .Build();
+
+            var sut = new BoardController(gameSettings);
+            var result = sut.MoveTurtle();
+
+            Assert.Equal(MovesResultPossibilities.Success, result);
         }
 
         [Fact]

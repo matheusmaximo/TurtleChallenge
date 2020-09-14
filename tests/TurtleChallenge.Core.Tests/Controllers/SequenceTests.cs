@@ -47,6 +47,7 @@ namespace TurtleChallenge.Core.Tests.Controllers
 
             Mock<IBoardController> mockBoardController = new Mock<IBoardController>();
             mockBoardController.Setup(m => m.GetResult()).Returns(movesResult);
+            mockBoardController.Setup(m => m.MoveTurtle()).Returns(movesResult);
             IBoardController boardController = mockBoardController.Object;
 
             var sut = new Sequence(sequenceId, moves);
@@ -64,7 +65,7 @@ namespace TurtleChallenge.Core.Tests.Controllers
             var movesResult = MovesResultPossibilities.MineHit;
 
             Mock<IBoardController> mockBoardController = new Mock<IBoardController>();
-            mockBoardController.Setup(m => m.MoveTurtle()).Throws<TurtleHitMineException>();
+            mockBoardController.Setup(m => m.MoveTurtle()).Returns(movesResult);
             IBoardController boardController = mockBoardController.Object;
 
             var sut = new Sequence(sequenceId, moves);
@@ -81,8 +82,7 @@ namespace TurtleChallenge.Core.Tests.Controllers
             var movesResult = MovesResultPossibilities.OutOfBoard;
 
             Mock<IBoardController> mockBoardController = new Mock<IBoardController>();
-            var dummyException = new IndexOutOfBoardException("Turtle", 0, 0);
-            mockBoardController.Setup(m => m.MoveTurtle()).Throws(dummyException);
+            mockBoardController.Setup(m => m.MoveTurtle()).Returns(movesResult);
             IBoardController boardController = mockBoardController.Object;
 
             var sut = new Sequence(sequenceId, moves);
