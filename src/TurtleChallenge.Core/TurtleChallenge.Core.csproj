@@ -1,0 +1,12 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\TurtleChallenge.Data.Reporter\TurtleChallenge.Data.Reporter.csproj" />
+    <ProjectReference Include="..\TurtleChallenge.Data.Retriever\TurtleChallenge.Data.Retriever.csproj" />
+  </ItemGroup>
+
+</Project>

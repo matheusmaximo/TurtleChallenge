@@ -1,0 +1,31 @@
+﻿{
+	"GameSettings": {
+		"BoardSize": {
+			"M": 4,
+			"N": 5
+		},
+		"StartingPosition": {
+			"X": 0,
+			"Y": 2,
+			"Direction": "East"
+		},
+		"ExitPoint": {
+			"X": 4,
+			"Y": 1
+		},
+		"Mines": [
+			{
+				"X": 1,
+				"Y": 2
+			},
+			{
+				"X": 3,
+				"Y": 0
+			},
+			{
+				"X": 3,
+				"Y": 2
+			}
+		]
+	}
+}
