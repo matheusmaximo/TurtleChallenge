@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using TurtleChallenge.Core;
 using TurtleChallenge.Core.Controllers;
@@ -62,7 +63,7 @@ namespace TurtleChallenge.Integration.Tests
         {
             if (_moves.Count <= _moveIndex)
             {
-                return null;
+                return Array.Empty<char>();
             }
 
             var move = _moves[_moveIndex++];
